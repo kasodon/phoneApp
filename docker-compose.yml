@@ -1,0 +1,63 @@
+version: '3.8'
+
+x-common-variables: &common-variables
+MONGO_URI: mongodb+srv://onyedika:password1015@phoneapp.hsljshz.mongodb.net/PhoneApp?retryWrites=true&w=majority
+
+services:
+    mongodb:
+        image : mongo
+        container_name: mongodb
+    restart: always
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - /home/barry/mongodb/database:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      <<: *common-variables
+      MONGO_URI: MONGO_URI
+
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    depends_on:
+      - mongodb
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    environment:
+      <<: *common-variables
+
+  frontend:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+
+  adminer:
+      image: adminer:latest
+      restart: unless-stopped
+      ports:
+        - 8000:8080
+      depends_on:
+        - mongodb
+      environment:
+        ADMINER_DEFAULT_SERVER: mongodb
