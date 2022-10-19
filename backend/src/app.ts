@@ -45,7 +45,7 @@ const port = process.env.PORT || 3001;
 
 const start = async () => {
     try {
-       await connectDB(process.env.MONGO_URI)
+       await connectDB(`mongodb://mongodb:27017/docker-db`)
        app.listen(port)
        console.log(`Server is listening on ${port}...`)
     } catch (error) {

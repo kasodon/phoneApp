@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 const port = process.env.PORT || 3001;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield connect_1.default(process.env.MONGO_URI);
+        yield connect_1.default(`mongodb://mongodb:27017/docker-db`);
         app.listen(port);
         console.log(`Server is listening on ${port}...`);
     }
