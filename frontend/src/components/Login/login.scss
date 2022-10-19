@@ -1,0 +1,34 @@
+.login {
+    max-width: 100%;
+    width: 100%;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h4 {
+        margin-bottom: 4rem;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        button {
+            margin-top: 3rem;
+            border: none;
+                border-radius: 6px;
+                font-size: 1.5rem;
+                line-height: 18px;
+                font-weight: 500;
+                color: #100D0E;
+                background: #FCBA28;
+                padding: 23px 50px;
+                border-radius: 9999px;
+                text-transform: uppercase;
+                font-family: 'Paytone One', sans-serif;
+                cursor: pointer;
+        }
+    }
+}

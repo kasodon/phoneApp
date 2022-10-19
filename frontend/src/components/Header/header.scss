@@ -1,0 +1,53 @@
+.header {
+        background: transparent;
+        height: 10vh;
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .logo {
+            padding-left: 5rem;
+            width: 30%;
+            text-transform: uppercase;
+            font-family: 'Paytone One', sans-serif;
+            font-size: 2.3rem;
+            text-shadow:
+                 3px  3px 0 #006D77,
+                 -1px -1px 0 #006D77,  
+                 1px -1px 0 #006D77,
+                 -1px  1px 0 #006D77,
+                 1px  1px 0 #006D77;
+                 @supports (-webkit-text-stroke: .6px #F9F4DA) {
+                     -webkit-text-stroke: .6px #F9F4DA;
+                     -webkit-text-fill-color: #FCBA28;
+                 }
+        }
+        .cta {
+            padding-right: 5rem;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            button {
+                border: none;
+                // border-radius: 6px;
+                font-size: 16px;
+                line-height: 18px;
+                font-weight: 500;
+                color: #FCBA28;
+                background: transparent;
+                padding: 13px 30px;
+                border-radius: 9999px;
+                border: 3px #FCBA28 solid;
+                text-transform: uppercase;
+                font-family: 'Paytone One', sans-serif;
+                cursor: pointer;
+                &:hover {
+                    background: #FCBA28;
+                    color: #100D0E;
+                }
+            }
+        }
+}
