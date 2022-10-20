@@ -23,6 +23,7 @@ const [first_name, setFirstName] = useState("");
 const [last_name, setLastName] = useState("");
 const [gender, setGender] = useState("");
 const [phone, setPhone] = useState("");
+const [contactId, setContactId] = useState("");
 // const queryClient = useQueryClient();
 // const navigate = useNavigate();
 const {id, token} = useContext(UserContextProvider);
@@ -50,6 +51,54 @@ useEffect(() => {
     //   setPassword("");
     }
   })
+
+  const update = useMutation(updateContacts, {
+    onSuccess: () => {
+    //   setEmail("");
+    //   setPassword("");
+    }
+  })
+
+  const deletContact = useMutation(deleteContact, {
+    onSuccess: () => {
+    //   setEmail("");
+    //   setPassword("");
+    }
+  })
+
+  async function getContact (val: any) {
+    // const headers = { 
+    //     'Authorization': `Bearer ${token}`
+    // };
+    const config = {
+        headers:{
+            'Authorization': `Bearer ${token}`
+        },
+      };
+    await axios.get(`http://localhost:3001/crud/contact/${val}`, config)
+        .then(response => {
+            console.log(response)
+            if (response.status === 200) {
+                setFirstName(response.data.first_name)
+                setLastName(response.data.last_name)
+                setGender(response.data.gender)
+                setPhone(response.data.phone)
+                toast.success('Contact fetched successfully!', {
+                                position: "top-right",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                });
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+  }
 
   async function getContacts () {
     const headers = { 
@@ -111,14 +160,81 @@ useEffect(() => {
         });
   }
 
-//   function handleSubmit (e: any) {
+  async function updateContacts () {
+    const data = { 
+        first_name,
+        last_name,
+        gender,
+        phone,
+        userId: id
+     };
+    const headers = { 
+        'Authorization': `Bearer ${token}`
+    };
+    await axios.put(`http://localhost:3001/crud/contact/${contactId}`, data, { headers })
+        .then(response => {
+            console.log(response)
+            if (response.status === 200) {
+                toast.success('Contact updated successfully!', {
+                                position: "top-right",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                });
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+  }
+
+  async function deleteContact (id) {
+     const config = {
+        headers:{
+            'Authorization': `Bearer ${token}`
+        },
+        data: { 
+            userId: id
+         }
+      };
+    await axios.delete(`http://localhost:3001/crud/contact/${id}`, config)
+        .then(response => {
+            console.log(response)
+            if (response.status === 200) {
+                toast.success('Contact deleted successfully!', {
+                                position: "top-right",
+                                autoClose: 3000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                });
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+  }
+
+//   function handleDeleteSubmit (e: any) {
 //     e.preventDefault()
-//     mutation.mutate()
+//     deletContact.mutate()
 //   }
 
   function handleCreatSubmit (e: any) {
     e.preventDefault()
     create.mutate()
+  }
+
+  function handleUpdateSubmit (e: any) {
+    e.preventDefault()
+    update.mutate()
   }
 
     return (
@@ -153,8 +269,16 @@ useEffect(() => {
                     <p>{contact.first_name} {contact.last_name}</p>
                 </div>
                 <div className="single-two">
-                    <button className="edit">Edit</button>
-                    <button className="delete">Delete</button>
+                    <button onClick={() => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          handleClickOpen();
+          getContact(`${contact.id}`);
+          setContactId(contact.id)
+        }} className="edit">Edit</button>
+                    <button onClick={() => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          deleteContact(contact.id);
+        }} className="delete">Delete</button>
                 </div>
             </div>
                     ))}
@@ -169,6 +293,21 @@ useEffect(() => {
       <TextField fullWidth id="" label="gender" helperText="Please enter your gender" color="success" value={gender} onChange={(e) => setGender(e.target.value)} />
       <TextField fullWidth id="" label="phone" helperText="Please enter your phone" color="success" value={phone} onChange={(e) => setPhone(e.target.value)} />
       <button type="submit" disabled={create.isLoading}>Create</button>
+        </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Update Contact</DialogTitle>
+        <DialogContent>
+        <form onSubmit={handleUpdateSubmit}>
+        <TextField fullWidth id="" label="first name" helperText="Please enter your first name" color="success" value={first_name} onChange={(e) => setFirstName(e.target.value)} />
+      <TextField fullWidth id="" label="last name" helperText="Please enter your last name" color="success" value={last_name} onChange={(e) => setLastName(e.target.value)} />
+      <TextField fullWidth id="" label="gender" helperText="Please enter your gender" color="success" value={gender} onChange={(e) => setGender(e.target.value)} />
+      <TextField fullWidth id="" label="phone" helperText="Please enter your phone" color="success" value={phone} onChange={(e) => setPhone(e.target.value)} />
+      <button type="submit" disabled={create.isLoading}>Update</button>
         </form>
         </DialogContent>
         <DialogActions>

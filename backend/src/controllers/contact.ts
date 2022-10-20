@@ -1,8 +1,9 @@
 import {validationResult} from 'express-validator/check';
 import User from '../models/user';
 import Contact from '../models/contact';
+import { Types } from 'mongoose';
 
-type RequestParams = { contactId: string };
+type RequestParams = { contactId: Number };
 type RequestBody = { 
     first_name: string,
     last_name: string,
@@ -75,8 +76,9 @@ export const getContacts = (req, res, next) => {
   
   export const getContact = (req, res, next) => {
     const params = req.params as RequestParams;
-    const contactId = params.contactId;
-    Contact.findById(contactId)
+    const id = params.contactId;
+    console.log(id);
+    Contact.findById(id)
       .then(contact => {
         if (!contact) {
           const error: any = new Error('Could not find contact.');
@@ -95,7 +97,7 @@ export const getContacts = (req, res, next) => {
   
   export const updateContact = (req, res, next) => {
     const params = req.params as RequestParams;
-    const contactId = params.contactId;
+    const id = params.contactId;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error: any = new Error('Validation failed, data is empty!');
@@ -106,7 +108,7 @@ export const getContacts = (req, res, next) => {
     const last_name = req.body.last_name;
     const gender = req.body.gender;
     const phone = req.body.phone;
-    Contact.findById(contactId)
+    Contact.findById(id)
       .then(contact => {
         if (!contact) {
           const error: any = new Error('Could not find contact.');

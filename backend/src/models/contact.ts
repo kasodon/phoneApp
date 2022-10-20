@@ -27,4 +27,11 @@ const contactSchema = new Schema(
       { timestamps: true }
 );
 
+contactSchema.method("toJSON", function() {
+  const { __v, _id, ...object } = this.toObject();
+  object.id = _id;
+  return object;
+});
+
+
 export default model('Contact', contactSchema);

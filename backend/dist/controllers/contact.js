@@ -70,8 +70,9 @@ const createContact = (req, res, next) => {
 exports.createContact = createContact;
 const getContact = (req, res, next) => {
     const params = req.params;
-    const contactId = params.contactId;
-    contact_1.default.findById(contactId)
+    const id = params.contactId;
+    console.log(id);
+    contact_1.default.findById(id)
         .then(contact => {
         if (!contact) {
             const error = new Error('Could not find contact.');
@@ -90,7 +91,7 @@ const getContact = (req, res, next) => {
 exports.getContact = getContact;
 const updateContact = (req, res, next) => {
     const params = req.params;
-    const contactId = params.contactId;
+    const id = params.contactId;
     const errors = check_1.validationResult(req);
     if (!errors.isEmpty()) {
         const error = new Error('Validation failed, data is empty!');
@@ -101,7 +102,7 @@ const updateContact = (req, res, next) => {
     const last_name = req.body.last_name;
     const gender = req.body.gender;
     const phone = req.body.phone;
-    contact_1.default.findById(contactId)
+    contact_1.default.findById(id)
         .then(contact => {
         if (!contact) {
             const error = new Error('Could not find contact.');

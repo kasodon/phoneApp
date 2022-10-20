@@ -10,8 +10,8 @@ import Footer from './components/Footer/footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Dashboard = React.lazy(
-  () => import('./components/Dashboard/dashboard'),
-)
+  () => import('./components/Dashboard/dashboard')
+);
 
 function App() {
   const [loading, setLoading] = useState(false);

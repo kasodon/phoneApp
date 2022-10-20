@@ -13,7 +13,7 @@ function Login() {
   const [password, setPassword] = useState("");
   // const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const {setId, setToken} = useContext(UserContextProvider);
+  const {setId, setToken, setIsAuth} = useContext(UserContextProvider);
 
   const mutation = useMutation(login, {
     onSuccess: () => {
@@ -39,6 +39,7 @@ function Login() {
             if (response.status === 200) {
               setToken(response.data.token)
               setId(response.data.id)
+              setIsAuth(true)
                 localStorage.setItem('token', JSON.stringify(response.data.token));
                 toast.success('Login was succesful! Redirecting', {
                                 position: "top-right",
