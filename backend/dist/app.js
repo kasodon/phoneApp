@@ -14,14 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const cors_1 = __importDefault(require("cors"));
 const connect_1 = __importDefault(require("./db/connect"));
 require('dotenv').config();
 const router = express_1.default.Router();
 const auth_1 = __importDefault(require("./routes/auth"));
 const contact_1 = __importDefault(require("./routes/contact"));
 const app = express_1.default();
-app.use(cors_1.default());
 app.use(body_parser_1.default.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -45,7 +43,8 @@ router.get('/', (req, res) => {
 const port = process.env.PORT || 3001;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield connect_1.default(`mongodb://mongodb:27017/docker-db`);
+        yield connect_1.default(process.env.MONGO_URI);
+        //  await connectDB(mongodb://mongodb:27017/docker-db)
         app.listen(port);
         console.log(`Server is listening on ${port}...`);
     }

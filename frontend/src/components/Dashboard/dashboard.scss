@@ -69,15 +69,32 @@
         margin-bottom: 5rem;
         display: flex;
         flex-direction: column;
-        width: 100%;
-        h3 {
-        margin-bottom: 3rem;
+        max-width: 90%;
+        .con {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            button {
+                border: none;
+            border-radius: 6px;
+            font-size: 1.5rem;
+            line-height: 18px;
+            font-weight: 500;
+            color: #100D0E;
+            background: #FCBA28;
+            padding: 23px 50px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-family: 'Paytone One', sans-serif;
+            cursor: pointer;
+            }
         }
         .box {
             display: flex;
             flex-direction: column; 
             .single {
-                width: 90%;
+                width: 100%;
                 height: 100px;
                 background: transparent;
                 border-radius: 9999px;
@@ -133,5 +150,23 @@
                 }
             }
         }
+    }
+    Dialog {
+      Form {
+          button {
+            border: none;
+            border-radius: 6px;
+            font-size: 1.5rem;
+            line-height: 18px;
+            font-weight: 500;
+            color: #100D0E;
+            background: #FCBA28;
+            padding: 23px 50px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-family: 'Paytone One', sans-serif;
+            cursor: pointer;
+          }
+      }  
     }
 }

@@ -11,7 +11,6 @@ import contactRoutes from './routes/contact';
 
 
 const app = express();
-app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -45,7 +44,8 @@ const port = process.env.PORT || 3001;
 
 const start = async () => {
     try {
-       await connectDB(`mongodb://mongodb:27017/docker-db`)
+       await connectDB(process.env.MONGO_URI)
+      //  await connectDB(mongodb://mongodb:27017/docker-db)
        app.listen(port)
        console.log(`Server is listening on ${port}...`)
     } catch (error) {

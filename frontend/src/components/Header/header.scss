@@ -26,11 +26,11 @@
         }
         .cta {
             padding-right: 5rem;
-            width: 30%;
+            width: 40%;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            button {
+            a {
                 border: none;
                 // border-radius: 6px;
                 font-size: 16px;
@@ -44,6 +44,7 @@
                 text-transform: uppercase;
                 font-family: 'Paytone One', sans-serif;
                 cursor: pointer;
+                margin-right: .5rem;
                 &:hover {
                     background: #FCBA28;
                     color: #100D0E;

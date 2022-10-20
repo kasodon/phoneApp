@@ -18,3 +18,40 @@
   width: 400px !important;
   margin-bottom: 1.5rem !important;
 }
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  background-color: #100D0E !important;
+  color: #F9F4DA !important;
+  form {
+    button {
+      border: none;
+            border-radius: 6px;
+            font-size: 1.5rem;
+            line-height: 18px;
+            font-weight: 500;
+            color: #100D0E;
+            background: #FCBA28;
+            padding: 23px 50px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-family: 'Paytone One', sans-serif;
+            cursor: pointer;
+            margin-top: 2rem;
+    }
+  }
+  button {
+    border: none;
+          border-radius: 6px;
+          font-size: 1.5rem;
+          line-height: 18px;
+          font-weight: 500;
+          color: #100D0E;
+          background: #F9F4DA;
+          padding: 15px 25px;
+          border-radius: 9px;
+          text-transform: uppercase;
+          font-family: 'Paytone One', sans-serif;
+          cursor: pointer;
+          margin-top: 2rem;
+  }
+}

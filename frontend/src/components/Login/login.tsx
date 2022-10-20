@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios"
+import axios from "axios";
+import UserContextProvider from "../Context/UserContext";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import './login.scss';
 import TextField from '@mui/material/TextField';
@@ -10,8 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 function Login() {
     const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const {setId, setToken} = useContext(UserContextProvider);
 
   const mutation = useMutation(login, {
     onSuccess: () => {
@@ -35,7 +37,9 @@ function Login() {
         .then(response => {
             console.log(response)
             if (response.status === 200) {
-                localStorage.setItem('data', JSON.stringify(response.data));
+              setToken(response.data.token)
+              setId(response.data.id)
+                localStorage.setItem('token', JSON.stringify(response.data.token));
                 toast.success('Login was succesful! Redirecting', {
                                 position: "top-right",
                                 autoClose: 3000,
