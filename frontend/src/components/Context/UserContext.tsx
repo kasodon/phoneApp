@@ -9,33 +9,33 @@ export const UserContextProvider = ({ children }) => {
   const [id, setId] = useState("");
 
   useEffect(() => {
-    const data = window.localStorage.getItem('USER_INFO');
-    setUserInfo(JSON.parse(data))
+    const data = window.localStorage.getItem("USER_INFO");
+    setUserInfo(JSON.parse(data));
   }, []);
   useEffect(() => {
-    const data = window.localStorage.getItem('TOKEN');
-    setToken(JSON.parse(data))
+    const data = window.localStorage.getItem("TOKEN");
+    setToken(JSON.parse(data));
   }, []);
   useEffect(() => {
-    const data = window.localStorage.getItem('ID');
-    setId(JSON.parse(data))
+    const data = window.localStorage.getItem("ID");
+    setId(JSON.parse(data));
   }, []);
   useEffect(() => {
-    const data = window.localStorage.getItem('IS_AUTH');
-    setIsAuth(JSON.parse(data))
+    const data = window.localStorage.getItem("IS_AUTH");
+    setIsAuth(JSON.parse(data));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('USER_INFO', JSON.stringify(userInfo));
+    window.localStorage.setItem("USER_INFO", JSON.stringify(userInfo));
   }, [userInfo]);
   useEffect(() => {
-    window.localStorage.setItem('IS_AUTH', JSON.stringify(isAuth));
+    window.localStorage.setItem("IS_AUTH", JSON.stringify(isAuth));
   }, [isAuth]);
   useEffect(() => {
-    window.localStorage.setItem('TOKEN', JSON.stringify(token));
+    window.localStorage.setItem("TOKEN", JSON.stringify(token));
   }, [token]);
   useEffect(() => {
-    window.localStorage.setItem('ID', JSON.stringify(id));
+    window.localStorage.setItem("ID", JSON.stringify(id));
   }, [id]);
 
   const value = {
@@ -46,7 +46,7 @@ export const UserContextProvider = ({ children }) => {
     token,
     setToken,
     id,
-    setId
+    setId,
   };
 
   return (

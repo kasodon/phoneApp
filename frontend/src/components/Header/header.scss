@@ -1,54 +1,50 @@
 .header {
-        background: transparent;
-        height: 10vh;
-        max-width: 100%;
-        width: 100%;
-        padding: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .logo {
-            padding-left: 5rem;
-            width: 30%;
-            text-transform: uppercase;
-            font-family: 'Paytone One', sans-serif;
-            font-size: 2.3rem;
-            text-shadow:
-                 3px  3px 0 #006D77,
-                 -1px -1px 0 #006D77,  
-                 1px -1px 0 #006D77,
-                 -1px  1px 0 #006D77,
-                 1px  1px 0 #006D77;
-                 @supports (-webkit-text-stroke: .6px #F9F4DA) {
-                     -webkit-text-stroke: .6px #F9F4DA;
-                     -webkit-text-fill-color: #FCBA28;
-                 }
-        }
-        .cta {
-            padding-right: 5rem;
-            width: 40%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            a {
-                border: none;
-                // border-radius: 6px;
-                font-size: 16px;
-                line-height: 18px;
-                font-weight: 500;
-                color: #FCBA28;
-                background: transparent;
-                padding: 13px 30px;
-                border-radius: 9999px;
-                border: 3px #FCBA28 solid;
-                text-transform: uppercase;
-                font-family: 'Paytone One', sans-serif;
-                cursor: pointer;
-                margin-right: .5rem;
-                &:hover {
-                    background: #FCBA28;
-                    color: #100D0E;
-                }
-            }
-        }
+  background: transparent;
+  height: 10vh;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    padding-left: 5rem;
+    width: 30%;
+    text-transform: uppercase;
+    font-family: "Paytone One", sans-serif;
+    font-size: 2.3rem;
+    text-shadow: 3px 3px 0 #006d77, -1px -1px 0 #006d77, 1px -1px 0 #006d77,
+      -1px 1px 0 #006d77, 1px 1px 0 #006d77;
+    @supports (-webkit-text-stroke: 0.6px #f9f4da) {
+      -webkit-text-stroke: 0.6px #f9f4da;
+      -webkit-text-fill-color: #fcba28;
+    }
+  }
+  .cta {
+    padding-right: 5rem;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    a {
+      border: none;
+      // border-radius: 6px;
+      font-size: 16px;
+      line-height: 18px;
+      font-weight: 500;
+      color: #fcba28;
+      background: transparent;
+      padding: 13px 30px;
+      border-radius: 9999px;
+      border: 3px #fcba28 solid;
+      text-transform: uppercase;
+      font-family: "Paytone One", sans-serif;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      &:hover {
+        background: #fcba28;
+        color: #100d0e;
+      }
+    }
+  }
 }

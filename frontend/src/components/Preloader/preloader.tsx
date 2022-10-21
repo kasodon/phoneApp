@@ -1,10 +1,8 @@
-import React from 'react';
-import './preloader.scss';
+import React from "react";
+import "./preloader.scss";
 
 function Preloader() {
-    return (
-        <div></div>
-    )
+  return <div></div>;
 }
 
 export default Preloader;
