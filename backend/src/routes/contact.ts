@@ -7,7 +7,7 @@ import auth from '../middleware/is-auth';
 const router = express.Router();
 
 // GET /contact/contacts
-router.get('/contacts', auth, contactController.getContacts);
+router.get('/contacts/:userId', auth, contactController.getContacts);
 
 // POST /contact/post
 router.post(

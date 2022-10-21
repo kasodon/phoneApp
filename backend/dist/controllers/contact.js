@@ -8,7 +8,9 @@ const check_1 = require("express-validator/check");
 const user_1 = __importDefault(require("../models/user"));
 const contact_1 = __importDefault(require("../models/contact"));
 const getContacts = (req, res, next) => {
-    contact_1.default.find()
+    const params = req.params;
+    const id = params.userId;
+    contact_1.default.find({ 'creator': `${id}` })
         .then(contacts => {
         res.status(200).json({
             message: 'Fetched contacts successfully.',

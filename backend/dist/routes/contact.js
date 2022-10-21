@@ -28,7 +28,7 @@ const contactController = __importStar(require("../controllers/contact"));
 const is_auth_1 = __importDefault(require("../middleware/is-auth"));
 const router = express_1.default.Router();
 // GET /contact/contacts
-router.get('/contacts', is_auth_1.default, contactController.getContacts);
+router.get('/contacts/:userId', is_auth_1.default, contactController.getContacts);
 // POST /contact/post
 router.post('/contact', is_auth_1.default, [
     check_1.body('first_name')

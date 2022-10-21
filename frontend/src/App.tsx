@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Suspense} from 'react';
 import './App.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserContextProvider } from "./components/Context/UserContext";
@@ -29,6 +29,7 @@ function App() {
         (
             <Router>
               <Header />
+              <Suspense fallback={<p>Loading...</p>}>
             <Routes>
                 {mainRoutes.map((prop, key) => {
                     return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
             </Routes>
+            </Suspense>
             <Footer />
         </Router>
         ) 

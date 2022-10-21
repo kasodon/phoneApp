@@ -4,6 +4,7 @@ import Contact from '../models/contact';
 import { Types } from 'mongoose';
 
 type RequestParams = { contactId: Number };
+type RequestParam = { userId: string };
 type RequestBody = { 
     first_name: string,
     last_name: string,
@@ -14,7 +15,9 @@ type RequestBody = {
 
 
 export const getContacts = (req, res, next) => {
-    Contact.find()
+  const params = req.params as RequestParam;
+    const id = params.userId;
+    Contact.find({'creator' : `${id}`})
       .then(contacts => {
         res.status(200).json({
           message: 'Fetched contacts successfully.',

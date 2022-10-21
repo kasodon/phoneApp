@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import UserContextProvider from "../Context/UserContext";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import './dashboard.scss';
 import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
@@ -11,10 +10,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 import male from '../../assets/img/male.png';
 import female from '../../assets/img/female.png';
 
@@ -24,21 +20,28 @@ const [last_name, setLastName] = useState("");
 const [gender, setGender] = useState("");
 const [phone, setPhone] = useState("");
 const [contactId, setContactId] = useState("");
-// const queryClient = useQueryClient();
-// const navigate = useNavigate();
-const {id, token} = useContext(UserContextProvider);
+const {id, token, userInfo} = useContext(UserContextProvider);
 const [contacts, setContacts] = useState([]);
 const [mal, setMal] = useState([]);
 const [femal, setFemal] = useState([]);
 
 const [open, setOpen] = React.useState(false);
+const [openCreate, setOpenCreate] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleClickOpenCreate = () => {
+    setOpenCreate(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
   };
 
 useEffect(() => {
@@ -59,17 +62,7 @@ useEffect(() => {
     }
   })
 
-  const deletContact = useMutation(deleteContact, {
-    onSuccess: () => {
-    //   setEmail("");
-    //   setPassword("");
-    }
-  })
-
   async function getContact (val: any) {
-    // const headers = { 
-    //     'Authorization': `Bearer ${token}`
-    // };
     const config = {
         headers:{
             'Authorization': `Bearer ${token}`
@@ -101,10 +94,12 @@ useEffect(() => {
   }
 
   async function getContacts () {
-    const headers = { 
-        'Authorization': `Bearer ${token}`
-    };
-    await axios.get('http://localhost:3001/crud/contacts', { headers })
+    const config = {
+        headers:{
+            'Authorization': `Bearer ${token}`
+        },
+      };
+    await axios.get(`http://localhost:3001/crud/contacts/${id}`, config)
         .then(response => {
             console.log(response)
             if (response.status === 200) {
@@ -153,6 +148,7 @@ useEffect(() => {
                                 progress: undefined,
                                 theme: "light",
                                 });
+                                window.location.reload();
             }
         })
         .catch(error => {
@@ -185,6 +181,7 @@ useEffect(() => {
                                 progress: undefined,
                                 theme: "light",
                                 });
+                                window.location.reload();
             }
         })
         .catch(error => {
@@ -215,17 +212,13 @@ useEffect(() => {
                                 progress: undefined,
                                 theme: "light",
                                 });
+                                window.location.reload();
             }
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
   }
-
-//   function handleDeleteSubmit (e: any) {
-//     e.preventDefault()
-//     deletContact.mutate()
-//   }
 
   function handleCreatSubmit (e: any) {
     e.preventDefault()
@@ -240,7 +233,7 @@ useEffect(() => {
     return (
         <div className="dashboard">
             <div className="title">
-                <h2>Hey there, welcome!</h2>
+                <h2>{`Hey ${userInfo}, welcome!`}</h2>
             </div>
             <div className="info">
                 <div className="item green">
@@ -259,13 +252,13 @@ useEffect(() => {
             <div className="contacts">
                 <div className="con">
                 <h3>All Contacts</h3>
-                <button onClick={handleClickOpen}>Create</button>
+                <button onClick={handleClickOpenCreate}>Create</button>
                 </div>
                 <div className="box">
                 {contacts.map(contact=> (
                 <div className="single">
                 <div className="single-one">
-                    <img src={male} alt="" />
+                    {contact.gender === "male" ? <img src={male} alt="" /> : <img src={female} alt="" /> }
                     <p>{contact.first_name} {contact.last_name}</p>
                 </div>
                 <div className="single-two">
@@ -284,7 +277,7 @@ useEffect(() => {
                     ))}
                 </div>
             </div>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={openCreate} onClose={handleClose}>
         <DialogTitle>Create New Contact</DialogTitle>
         <DialogContent>
         <form onSubmit={handleCreatSubmit}>
@@ -296,7 +289,7 @@ useEffect(() => {
         </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleCloseCreate}>Close</Button>
         </DialogActions>
       </Dialog>
       <Dialog open={open} onClose={handleClose}>
