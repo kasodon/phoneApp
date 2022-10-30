@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import UserContextProvider from "../components/Context/UserContext";
+import { useSelector } from 'react-redux';
 
 const ProtectedRoutes = () => {
-  const { isAuth } = useContext(UserContextProvider);
-  return isAuth ? <Outlet /> : <Navigate to="/" />;
+  // @ts-ignore: Property '...' does not exist on type 'void'
+  const { loggedIn } = useSelector((state) => state.user)
+  return loggedIn ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoutes;
