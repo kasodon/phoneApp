@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from '../../store/userAction';
-import { AppDispatch } from '../../store/index';
-import { createContact, updateContact, deleteContact } from '../../store/userAction';
+import { useDispatch, useSelector } from "react-redux";
+import { getContacts } from "../../store/userAction";
+import { AppDispatch } from "../../store/index";
+import {
+  createContact,
+  updateContact,
+  deleteContact,
+} from "../../store/userAction";
 import "./dashboard.scss";
 import TextField from "@mui/material/TextField";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +20,10 @@ import femal from "../../assets/img/female.png";
 
 function Dashboard() {
   // @ts-ignore: Property '...' does not exist on type 'void'
-  const { userInfo, contacts, loading, male, female } = useSelector((state) => state.user);
+  const { userInfo, contacts, loading, male, female } = useSelector(
+    // @ts-ignore: Property '...' does not exist on type 'void'
+    (state) => state.user
+  );
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [gender, setGender] = useState("");
@@ -46,37 +53,38 @@ function Dashboard() {
 
   function handleCreatSubmit(e: any) {
     e.preventDefault();
-    handleCloseCreate()
+    handleCloseCreate();
     const data = {
       first_name,
-        last_name,
-        gender,
-        phone,
-        userId: userInfo.id
+      last_name,
+      gender,
+      phone,
+      userId: userInfo.id,
     };
-    dispatch(createContact(data))
+    dispatch(createContact(data));
   }
 
   function handleUpdateSubmit(e: any) {
     e.preventDefault();
     const data = {
       first_name,
-        last_name,
-        gender,
-        phone,
-        userId: userInfo.id,
-        contactId
+      last_name,
+      gender,
+      phone,
+      userId: userInfo.id,
+      contactId,
     };
-    dispatch(updateContact(data))
+    dispatch(updateContact(data));
   }
-  
 
   return (
     <div className="dashboard">
-      {!loading ? 
-      <><div className="title">
-          <h2>{`Hey ${userInfo?.first_name}, welcome!`}</h2>
-        </div><div className="info">
+      {!loading ? (
+        <>
+          <div className="title">
+            <h2>{`Hey ${userInfo?.first_name}, welcome!`}</h2>
+          </div>
+          <div className="info">
             <div className="item green">
               <div className="num one">
                 {contacts?.length > 0 ? contacts?.length : 0}
@@ -88,10 +96,13 @@ function Dashboard() {
               <div className="text">Male</div>
             </div>
             <div className="item pink">
-              <div className="num one">{female.length > 0 ? female.length : 0}</div>
+              <div className="num one">
+                {female.length > 0 ? female.length : 0}
+              </div>
               <div className="text">Female</div>
             </div>
-          </div><div className="contacts">
+          </div>
+          <div className="contacts">
             <div className="con">
               <h3>All Contacts</h3>
               <button onClick={handleClickOpenCreate}>Create</button>
@@ -116,17 +127,22 @@ function Dashboard() {
                     <button
                       onClick={() => {
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                        handleClickOpen()
-                        setContactId(contact.id)
-                      } }
+                        handleClickOpen();
+                        setContactId(contact.id);
+                      }}
                       className="edit"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => {
-                        dispatch(deleteContact({userId: userInfo.id, contactId: contact.id}))
-                      } }
+                        dispatch(
+                          deleteContact({
+                            userId: userInfo.id,
+                            contactId: contact.id,
+                          })
+                        );
+                      }}
                       className="delete"
                     >
                       Delete
@@ -135,7 +151,8 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-          </div><Dialog open={openCreate} onClose={handleClose}>
+          </div>
+          <Dialog open={openCreate} onClose={handleClose}>
             <DialogTitle>Create New Contact</DialogTitle>
             <DialogContent>
               <form onSubmit={handleCreatSubmit}>
@@ -146,7 +163,8 @@ function Dashboard() {
                   helperText="Please enter your first name"
                   color="success"
                   value={first_name}
-                  onChange={(e) => setFirstName(e.target.value)} />
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -154,7 +172,8 @@ function Dashboard() {
                   helperText="Please enter your last name"
                   color="success"
                   value={last_name}
-                  onChange={(e) => setLastName(e.target.value)} />
+                  onChange={(e) => setLastName(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -162,7 +181,8 @@ function Dashboard() {
                   helperText="Please enter your gender"
                   color="success"
                   value={gender}
-                  onChange={(e) => setGender(e.target.value)} />
+                  onChange={(e) => setGender(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -170,7 +190,8 @@ function Dashboard() {
                   helperText="Please enter your phone"
                   color="success"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)} />
+                  onChange={(e) => setPhone(e.target.value)}
+                />
                 <button type="submit" disabled={loading}>
                   Create
                 </button>
@@ -179,7 +200,8 @@ function Dashboard() {
             <DialogActions>
               <Button onClick={handleCloseCreate}>Close</Button>
             </DialogActions>
-          </Dialog><Dialog open={open} onClose={handleClose}>
+          </Dialog>
+          <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Update Contact</DialogTitle>
             <DialogContent>
               <form onSubmit={handleUpdateSubmit}>
@@ -190,7 +212,8 @@ function Dashboard() {
                   helperText="Please enter your first name"
                   color="success"
                   value={first_name}
-                  onChange={(e) => setFirstName(e.target.value)} />
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -198,7 +221,8 @@ function Dashboard() {
                   helperText="Please enter your last name"
                   color="success"
                   value={last_name}
-                  onChange={(e) => setLastName(e.target.value)} />
+                  onChange={(e) => setLastName(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -206,7 +230,8 @@ function Dashboard() {
                   helperText="Please enter your gender"
                   color="success"
                   value={gender}
-                  onChange={(e) => setGender(e.target.value)} />
+                  onChange={(e) => setGender(e.target.value)}
+                />
                 <TextField
                   fullWidth
                   id=""
@@ -214,7 +239,8 @@ function Dashboard() {
                   helperText="Please enter your phone"
                   color="success"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)} />
+                  onChange={(e) => setPhone(e.target.value)}
+                />
                 <button type="submit" disabled={loading}>
                   Update
                 </button>
@@ -223,8 +249,9 @@ function Dashboard() {
             <DialogActions>
               <Button onClick={handleClose}>Close</Button>
             </DialogActions>
-          </Dialog></>
-      : null }
+          </Dialog>
+        </>
+      ) : null}
     </div>
   );
 }

@@ -22,39 +22,39 @@ function App() {
   }, []);
   return (
     <div className="App">
-        {isLoading ? (
-          <Preloader />
-        ) : (
-          <Router>
-            <Header />
-            <Suspense fallback={<Preloader />}>
-              <Routes>
-                {mainRoutes.map((prop, key) => {
-                  return (
-                    <Route
-                      path={prop.path}
-                      key={key}
-                      element={prop.component}
-                    ></Route>
-                  );
-                })}
-                <Route element={<ProtectedRoutes />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Route>
-              </Routes>
-            </Suspense>
-            <Footer />
-          </Router>
-        )}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <Router>
+          <Header />
+          <Suspense fallback={<Preloader />}>
+            <Routes>
+              {mainRoutes.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.path}
+                    key={key}
+                    element={prop.component}
+                  ></Route>
+                );
+              })}
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+            </Routes>
+          </Suspense>
+          <Footer />
+        </Router>
+      )}
       <ToastContainer
-      position = "top-right"
-      autoClose = {3000}
-      hideProgressBar = {false}
-      closeOnClick = {true}
-      pauseOnHover = {true}
-      draggable = {true}
-      theme = "light"
-       />
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme="light"
+      />
     </div>
   );
 }

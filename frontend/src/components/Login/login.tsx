@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../../store/userAction';
-import { AppDispatch } from '../../store/index';
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../store/userAction";
+import { AppDispatch } from "../../store/index";
 import "./login.scss";
 import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
@@ -10,8 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   // @ts-ignore: Property '...' does not exist on type 'void'
-  const { loading, loggedIn, success, error } = useSelector((state) => state.user)
-  const dispatch = useDispatch<AppDispatch>()
+  const { loading, loggedIn, success, error } = useSelector(
+    // @ts-ignore: Property '...' does not exist on type 'void'
+    (state) => state.user
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +22,9 @@ function Login() {
 
   useEffect(() => {
     if (loggedIn) {
-      navigate('/dashboard')
+      navigate("/dashboard");
     }
-  }, [navigate, loggedIn])
+  }, [navigate, loggedIn]);
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -29,7 +32,7 @@ function Login() {
       email,
       password,
     };
-    dispatch(userLogin(data))
+    dispatch(userLogin(data));
   }
 
   return (

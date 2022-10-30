@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../store/userAction';
-import { AppDispatch } from '../../store/index';
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../store/userAction";
+import { AppDispatch } from "../../store/index";
 import "./signup.scss";
 import TextField from "@mui/material/TextField";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +27,7 @@ function Signup() {
       password,
     };
 
-    dispatch(registerUser(data))
+    dispatch(registerUser(data));
   }
 
   return (
