@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../store/userAction";
+import { AppDispatch } from "../../store/index";
 import "./signup.scss";
 import TextField from "@mui/material/TextField";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
@@ -12,55 +11,23 @@ function Signup() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  const mutation = useMutation(createAccount, {
-    onSuccess: () => {
-      setEmail("");
-      setFirstName("");
-      setLastName("");
-      setPassword("");
-      setTimeout(() => {
-        navigate("/login", { replace: true });
-      }, 3000);
-    },
-  });
+  const { loading, loggedIn, error, success } = useSelector(
+    // @ts-ignore: Property '...' does not exist on type 'void'
+    (state) => state.user
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
-  async function createAccount() {
+  function handleSubmit(e: any) {
+    e.preventDefault();
     const data = {
       email,
       first_name,
       last_name,
       password,
     };
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    await axios
-      .put("http://localhost:3001/auth/signup", data, { headers })
-      .then((response) => {
-        if (response.status === 201) {
-          toast.success("Signup was succesful! Please Login", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  }
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    mutation.mutate();
+    dispatch(registerUser(data));
   }
 
   return (
@@ -99,7 +66,7 @@ function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" disabled={mutation.isLoading}>
+        <button type="submit" disabled={loading}>
           Signup
         </button>
       </form>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense } from "react";
+// react redux state implementation
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserContextProvider } from "./components/Context/UserContext";
 import mainRoutes from "./routes/main";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import Preloader from "./components/Preloader/preloader";
@@ -12,43 +12,49 @@ import "react-toastify/dist/ReactToastify.css";
 const Dashboard = React.lazy(() => import("./components/Dashboard/dashboard"));
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
     setTimeout(() => {
-      setLoading(false);
-    }, 0);
+      setIsLoading(false);
+    }, 1500);
   }, []);
   return (
     <div className="App">
-      <UserContextProvider>
-        {loading ? (
-          <Preloader />
-        ) : (
-          <Router>
-            <Header />
-            <Suspense fallback={<p>Loading...</p>}>
-              <Routes>
-                {mainRoutes.map((prop, key) => {
-                  return (
-                    <Route
-                      path={prop.path}
-                      key={key}
-                      element={prop.component}
-                    ></Route>
-                  );
-                })}
-                <Route element={<ProtectedRoutes />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Route>
-              </Routes>
-            </Suspense>
-            <Footer />
-          </Router>
-        )}
-      </UserContextProvider>
-      <ToastContainer />
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <Router>
+          <Header />
+          <Suspense fallback={<Preloader />}>
+            <Routes>
+              {mainRoutes.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.path}
+                    key={key}
+                    element={prop.component}
+                  ></Route>
+                );
+              })}
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+            </Routes>
+          </Suspense>
+          <Footer />
+        </Router>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        theme="light"
+      />
     </div>
   );
 }

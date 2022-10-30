@@ -1,67 +1,38 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import UserContextProvider from "../Context/UserContext";
-import { useMutation } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../store/userAction";
+import { AppDispatch } from "../../store/index";
 import "./login.scss";
-import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
+import TextField from "@mui/material/TextField";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
+  // @ts-ignore: Property '...' does not exist on type 'void'
+  const { loading, loggedIn, success, error } = useSelector(
+    // @ts-ignore: Property '...' does not exist on type 'void'
+    (state) => state.user
+  );
+  const dispatch = useDispatch<AppDispatch>();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setId, setToken, setIsAuth, setUserInfo } =
-    useContext(UserContextProvider);
 
-  const mutation = useMutation(login, {
-    onSuccess: () => {
-      setEmail("");
-      setPassword("");
-      setTimeout(() => {
-        navigate("/dashboard", { replace: true });
-      }, 2000);
-    },
-  });
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/dashboard");
+    }
+  }, [navigate, loggedIn]);
 
-  async function login() {
+  function handleSubmit(e: any) {
+    e.preventDefault();
     const data = {
       email,
       password,
     };
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    await axios
-      .post("http://localhost:3001/auth/login", data, { headers })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          setToken(response.data.token);
-          setId(response.data.id);
-          setIsAuth(true);
-          setUserInfo(`${response.data.first_name} ${response.data.last_name}`);
-          toast.success("Login was succesful! Redirecting", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  }
-
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    mutation.mutate();
+    dispatch(userLogin(data));
   }
 
   return (
@@ -84,7 +55,7 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" disabled={mutation.isLoading}>
+        <button type="submit" disabled={loading}>
           Login
         </button>
       </form>
