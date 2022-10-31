@@ -1,6 +1,6 @@
 # PhoneBook App Repo
 
-This project has both Backend and Frontend folder and can be deployed locally with docker compose. TechStack includes: React | Redux | Redux Toolkit | SASS
+This project has both Backend and Frontend folder and can be deployed locally with docker compose. TechStack includes: React | Redux | Redux Toolkit | SASS | NodeJS | MongoDB | ExpressJS
 
 ## Project View Link
 
